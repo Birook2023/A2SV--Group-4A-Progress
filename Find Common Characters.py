@@ -1,12 +1,22 @@
 class Solution:
     def commonChars(self, words: List[str]) -> List[str]:
+        
+        fword = words[0]
         ans = []
-        res = Counter(words[-1])
+        counts = []
         
         for word in words:
-            res &= Counter(word)
+            counts.append(Counter(word))
             
-        for i in res:
-            ans += [i] * res[i]
-        
+        for char in fword:
+            count = 0
+            for i in range(len(counts)):
+                if counts[i][char] == 0:
+                    break
+                counts[i][char] -= 1
+                count += 1
+                
+            if count == len(words):
+                ans.append(char)
+                
         return ans
