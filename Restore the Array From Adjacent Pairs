@@ -1,0 +1,20 @@
+class Solution:
+    def restoreArray(self, adjacentPairs: List[List[int]]) -> List[int]:
+        graph = collections.defaultdict(set)
+        
+        for a, b in adjacentPairs:
+            graph[a].add(b)
+            graph[b].add(a)
+            
+        for node, g in graph.items():
+            if len(g) == 1:
+                break
+        res = [node]
+        
+        while graph[node]:
+            new = graph[node].pop()
+            res.append(new)
+            graph[new].remove(node)
+            node = new
+        
+        return res
